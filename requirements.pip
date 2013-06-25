@@ -1,0 +1,11 @@
+Flask
+Flask-OAuth
+celery
+celery-with-mongodb
+chaussette
+circus
+distribute
+picomongo
+pocket
+pytz
+requests

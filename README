@@ -1,0 +1,9 @@
+FeedLight
+=========
+
+In order to run feedlight:
+
+ * Change app keys in settings.py and in app.py
+ * Install requirements with pip install -r requirements.txt
+ * Run circusd circus.ini
+ * Enjoy
