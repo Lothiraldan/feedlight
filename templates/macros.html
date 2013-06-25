@@ -1,0 +1,23 @@
+
+{% macro render_twitter_source(source) -%}
+    <div class="info">
+        <a href="https://twitter.com/t/status/{{ source.id }}">
+            <img class="mini-icon" alt="" src="{{ url_for('static', filename='img/twitter-petit.png') }}"/>
+            <p>
+                {{ source.user_name }} tweet it the {{ source.created_at.strftime('%c') }}
+            </p>
+        </a>
+    </div>
+{%- endmacro %}
+
+
+{% macro render_facebook_source(source) -%}
+    <div class="info">
+        <a class="voir" href="{{ source.link }}">
+            <img class="mini-icon" alt="" src="{{ url_for('static', filename='img/facebook-petit.png') }}"/>
+            <p>
+                {{ source.user_name }} post it the {{ source.created_at.strftime('%c') }}
+            </p>
+        </a>
+    </div>
+{%- endmacro %}

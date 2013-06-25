@@ -1,0 +1,100 @@
+.modal {
+  display: none;
+  background: #fff;
+  padding: 15px 30px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -o-border-radius: 8px;
+  -ms-border-radius: 8px;
+  border-radius: 8px;
+  -webkit-box-shadow: 0 0 10px #000;
+  -moz-box-shadow: 0 0 10px #000;
+  -o-box-shadow: 0 0 10px #000;
+  -ms-box-shadow: 0 0 10px #000;
+  box-shadow: 0 0 10px #000;
+}
+
+
+.modal h1{
+  font-weight: 300px;
+  padding-top: 30px;
+}
+
+.modal ul{
+  margin: 50px 0 20px 0;
+}
+
+.modal li{
+  width: 60%;
+  height: 50px;
+  background-color: blue;
+  border-radius: 5px;
+  margin: 20px 0 20px 20%;
+}
+
+.modal li a{
+  display: block;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 200;
+  text-decoration: none;
+  vertical-align: middle;
+  text-align: center;
+  padding-top: 13px;
+}
+
+.modal .twitter{
+  background-color: #0098d1;
+  box-shadow: 0 5px 0 #2e4884;
+}
+
+.modal .twitter:hover{
+  background-color: #00aced;
+}
+
+.modal .facebook{
+  background-color: #3C599B;
+  box-shadow: 0 5px 0 #2e4884;
+}
+
+.modal .facebook:hover{
+  background-color: #4262ac;
+}
+
+.modal .pocket{
+  background-color: #d41934;
+  box-shadow: 0 5px 0 rgb(244,133,135);
+}
+
+.modal .pocket:hover{
+  background-color: #f63b56;
+}
+
+.modal a.close-modal {
+  position: absolute;
+  top: -12.5px;
+  right: -12.5px;
+  display: block;
+  width: 30px;
+  height: 30px;
+  text-indent: -9999px;
+  background: url(../img/close.png) no-repeat 0 0;
+}
+
+
+.modal-spinner {
+  display: none;
+  width: 64px;
+  height: 64px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-right: -32px;
+  margin-top: -32px;
+  background: url(/static/img/spinner.gif) #111 no-repeat center center;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -o-border-radius: 8px;
+  -ms-border-radius: 8px;
+  border-radius: 8px;
+}

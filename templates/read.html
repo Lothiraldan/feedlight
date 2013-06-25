@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% from "macros.html" import render_twitter_source, render_facebook_source %}
+
+{% block menu %}
+<div class="categorie">
+    <h2>Sources</h2>
+    <ul>
+        {% for source in link.sources.values() %}
+            <li>
+            {% if source.from == 'twitter' %}
+                {{ render_twitter_source(source.source) }}
+            {% elif source.from == 'facebook' %}
+                {{ render_facebook_source(source.source) }}
+            {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    <div class="dligne"></div>
+</div>
+<div class="categorie">
+    <h2>Actions</h2>
+    <ul>
+        <li><a href="{{ url_for('mark_as_read', link_id=link._id) }}"><img src="{{ url_for('static', filename='img/read.png') }}"><h3>Mark article as read</h3></a></li>
+        {% if g.user.meta.pocket %}
+        <li><a href="{{ url_for('push_to_pocket', link_id=link._id) }}"><img src="{{ url_for('static', filename='img/pocket.png') }}"><h3>Push to pocket</h3></a></li>
+        {% endif %}
+    </ul>
+</div>
+{% endblock %}
+
+{% block body %}
+    <div class="article">
+        <div class="article-inapp" id="{{ link._id }}">
+            <h1><a href="{{ link.url }}" target="_blank">{% if link.summary.title %}{{ link.summary.title }}{% else %}{{ link.summary.url }}{% endif %}</a></h1>
+            <h1>Posted on {{ link.url | extract_domain }} {% if link.summary.author %} by {{ link.summary.author }}{% endif %} {% if link.summary.date %} on {{ link.summary.date }}{% endif %}</h1>
+            {% if link.summary.html %}{{ link.summary.html | clean | safe }}{% else %}{{ link.summary.text }}{% endif %}
+        </div>
+    </div>
+{% endblock %}

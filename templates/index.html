@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+
+{% from "macros.html" import render_twitter_source, render_facebook_source %}
+
+{% macro render_link(link) -%}
+    <article class="is-post is-post-excerpt" id="{{ link._id }}">
+      <a id="{{ link._id }}"></a>
+      <header>
+        <h2><a href="#{{ link._id }}">{% if link.summary.title %}{{ link.summary.title }}{% else %}{{ link.summary.url }}{% endif %}</a></h2>
+        <h3>Posted on <a href="{{ link.summary.url | extract_domain }}">{{ link.summary.url | extract_domain }}</a> | <a href="{{ link.summary.url }}" target="_blank" class="source">View original</a></h3>
+        {% if link.summary.get('summary', None) %}
+            <span class="byline">{{ link.summary.summary }}</span>
+        {% else %}
+            <span class="byline">{{ link.summary.text | make_summary }}</span>
+        {% endif %}
+      </header>
+      <div class="info">
+        {% if link.summary.get('date', None) %}
+            <span class="date"><span class="month">{{ link.summary.date.strftime("%b")}} <span></span></span> <span class="day">{{ link.summary.date.day }}</span><span class="year">, {{ link.summary.date.year }}</span></span>
+        {% else %}
+            <span class="date"><span class="month">{{ link.last_source_date.strftime("%b")}} <span></span></span> <span class="day">{{ link.last_source_date.day }}</span><span class="year">, {{ link.last_source_date.year }}</span></span>
+        {% endif %}
+        <ul class="stats">
+          {% if link.sources_count['twitter'] %}
+            <li><a href="#" class="link-icon24 link-icon24-3">{{ link.sources_count['twitter'] }}</a></li>
+          {% endif %}
+          {% if link.sources_count['facebook'] %}
+            <li><a href="#" class="link-icon24 link-icon24-4">{{ link.sources_count['facebook'] }}</a></li>
+          {% endif %}
+        </ul>
+        <ul class="actions">
+            <li><a href="#" class="menu-icon24 unread"><img src="{{ url_for('static', filename='img/read.png') }}">Unread</a></li>
+            {% if g.user.meta.pocket %}
+            <li><a href="#" class="menu-icon24 push-to-pocket"><img src="{{ url_for('static', filename='img/pocket.png') }}">Pocket</a></li>
+            {% endif %}
+        </ul>
+      </div>
+
+      {% if link.summary.get('media', None) %}
+        {% for media in link.summary.media %}
+            {% if media.type == "image" and media.primary == 'true' %}
+                <a href="#" class="image image-full"><img src="{{ media.link }}" alt="" /></a>
+                {% break %}
+            {% endif %}
+        {% endfor %}
+      {% endif %}
+      <!-- {% if link.summary.html %}{{ link.summary.html | clean | safe }}{% else %}{{ link.summary.text }}{% endif %} -->
+    </article>
+
+{%- endmacro %}
+
+
+{% block body %}
+    {% if links_count %}
+        {% for link in links %}
+            {{ render_link(link) }}
+        {% endfor %}
+    {% else %}
+        <!-- Welcome article -->
+        <article class="is-post is-post-excerpt">
+          <a id="welcome"></a>
+          <header>
+            <h2>Welcome on FeedLight</h2>
+            <span class="byline">Your technological survey friend</span>
+          </header>
+
+          <p>You should add some networks to start reading your links.</p>
+
+          <p>
+
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque porttitor diam ut justo vulputate tempor. Donec id urna at enim dapibus vulputate. Nunc facilisis, elit euismod convallis feugiat, odio lorem tristique metus, a iaculis urna risus et leo. Integer eu ultrices leo. Nunc vitae hendrerit ante. Aenean sit amet metus nisl. Sed aliquet sagittis nisl, vel varius odio porta nec. Praesent imperdiet felis vitae arcu suscipit consequat. Quisque id augue dui. Mauris non ante nec metus venenatis rhoncus id et lectus. Donec vitae tellus quam, sit amet volutpat neque. Curabitur eget est odio, sit amet luctus nisi. Donec est lacus, aliquam at convallis sit amet, dignissim eu sapien. Integer sed ligula in eros porta bibendum id dapibus lacus.
+
+Ut rutrum adipiscing est at mollis. Vivamus elementum quam non odio laoreet non consequat nulla pretium. Duis blandit lacinia diam, a volutpat justo imperdiet vel. Vestibulum eget orci ligula. Sed tempus, tellus in semper egestas, dui nulla placerat erat, dictum congue mi turpis nec dui. Morbi laoreet nulla nec odio tristique lobortis. Suspendisse velit est, sollicitudin vitae pellentesque vel, tincidunt quis dui. Nullam quis nisl sed augue porttitor egestas a ut lacus. Aenean sit amet velit sed arcu rhoncus ornare a vitae risus. Vivamus faucibus consequat risus non cursus. Aenean porta eros et nulla tincidunt id adipiscing tellus luctus. Proin eu nibh sed risus viverra commodo.
+
+Curabitur dapibus, libero vitae condimentum viverra, lorem lacus sollicitudin magna, at aliquam augue diam a erat. Curabitur aliquet ornare malesuada. Nam ac tristique libero. Nunc feugiat sapien sit amet magna ultrices imperdiet. Phasellus eu libero eu libero fermentum porta. Quisque mattis eleifend ipsum vitae tincidunt. Morbi mattis, quam vitae ultricies porta, sem diam faucibus enim, porta vehicula purus risus id diam. Proin sed faucibus velit.
+
+Vestibulum sed aliquam tortor. Suspendisse a luctus felis. Ut tincidunt tellus non sem mollis rhoncus. Sed lacus neque, tristique vel rutrum vel, semper hendrerit nulla. Phasellus quis mi neque, id vulputate ligula. Vestibulum eros ligula, interdum quis venenatis a, egestas non leo. Morbi fermentum sapien eget felis rutrum pellentesque tempus dui eleifend.
+
+Vivamus adipiscing magna nec nunc vestibulum varius. Fusce felis felis, porttitor non varius nec, porttitor sit amet lectus. Etiam eu lectus turpis, ut rutrum quam. Phasellus convallis auctor velit, quis interdum ante sollicitudin non. Fusce ullamcorper, dui sed tristique faucibus, nibh lorem auctor lectus, et faucibus ante felis id lacus. Vivamus lorem sem, varius in feugiat et, tincidunt eget tortor. Suspendisse ornare, tellus non rhoncus sollicitudin, neque odio rutrum ipsum, at aliquet nulla enim non nisl. In molestie fringilla egestas. Praesent varius, nulla ut sollicitudin gravida, nulla tortor porttitor tortor, vel sollicitudin urna arcu in risus. Morbi a nibh lacus, eu vestibulum lectus. Nunc libero ante, lacinia ac tincidunt et, condimentum eu sapien.
+          </p>
+        </article>
+    {% endif %}
+{% endblock %}
+
+{% block profil %}
+    <p>You have <span class="links-count">{{links_count}}</span> unread links.</p>
+{% endblock %}
